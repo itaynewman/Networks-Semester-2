@@ -25,23 +25,30 @@ FILE_PATH = "Pink_Floyd_DB.txt"  # Use a relative path
 # Parse the data file
 albums, songs = data.parse_data(FILE_PATH)
 
+
 def get_albums():
     return data.get_albums(albums, songs)
+
 
 def get_songs_in_album(album_name):
     return data.get_songs_in_album(albums, songs, album_name)
 
+
 def get_song_length(song_name):
     return data.get_song_length(albums, songs, song_name)
+
 
 def get_song_lyrics(song_name):
     return data.get_song_lyrics(albums, songs, song_name)
 
+
 def get_album_for_song(song_name):
     return data.get_album_for_song(albums, songs, song_name)
 
+
 def search_song_by_name(search_text):
     return data.search_song_by_name(albums, songs, search_text)
+
 
 def search_song_by_lyrics(search_text):
     return data.search_song_by_lyrics(albums, songs, search_text)
