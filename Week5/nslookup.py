@@ -5,7 +5,7 @@ DNS_SERVER = "8.8.8.8"  # Google's DNS server
 DNS_PORT = 53
 
 
-def nslookup(domain):
+def nslookup(domain_func):
     # Create IP layer
     ip_layer = IP(dst=DNS_SERVER)
 
@@ -13,7 +13,7 @@ def nslookup(domain):
     udp_layer = UDP(dport=DNS_PORT)
 
     # Create DNS layer with the query
-    dns_layer = DNS(rd=1, qd=DNSQR(qname=domain))
+    dns_layer = DNS(rd=1, qd=DNSQR(qname=domain_func))
 
     # Combine the layers to form the complete DNS request
     dns_request = ip_layer / udp_layer / dns_layer
