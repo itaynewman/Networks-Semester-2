@@ -1,4 +1,5 @@
 from scapy.all import *
+from scapy.layers.inet import IP
 
 ALIEN_IP = '54.71.128.194'
 
