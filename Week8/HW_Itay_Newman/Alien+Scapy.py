@@ -97,7 +97,7 @@ def handle_packet(packet):
 
 def main():
     """
-    Main function to start sniffing packets and handle them.
+    Main function to start the program
     """
     sniff(prn=handle_packet)
 
