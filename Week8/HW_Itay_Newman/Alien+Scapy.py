@@ -39,11 +39,12 @@ def handle_packet(packet):
             if "location data" in deciphered_payload:
                 last_ten_chars = deciphered_payload[-10:]
                 last_ten_chars_list.append(last_ten_chars)
-            elif "location data: 10/10" in deciphered_payload:
+
+            if "location data: 10/10" in deciphered_payload:
                 all_last_ten_chars = ''.join(last_ten_chars_list)
                 all_last_ten_chars = all_last_ten_chars[:100]
                 md5_hash = hashlib.md5(all_last_ten_chars.encode()).hexdigest()
-                new_payload = f"location_md5={md5_hash},airport=unselected,time=15:52,lane=earth.jup,vehicle=2554,fly"
+                new_payload = f"FLY000location_md5={md5_hash},airport=nevada25.84,time=15:52,lane=earth.jup,vehicle=2554,fly"
                 new_packet = IP(dst=ALIEN_IP) / UDP(dport=packet[IP].sport) / Raw(load=new_payload)
                 send(new_packet)
                 print("Sent packet:", new_payload)
