@@ -6,7 +6,7 @@ ALIEN_IP = '54.71.128.194'
 
 
 def filter_func(packet):
-    return IP in packet and packet[IP].src == ALIEN_IP
+    return IP in packet and (packet[IP].src == ALIEN_IP or packet[IP].dst == ALIEN_IP)
 
 
 def custom_cipher_decipher(string, caesar_key):
@@ -39,12 +39,14 @@ def handle_packet(packet):
             if "location data" in deciphered_payload:
                 last_ten_chars = deciphered_payload[-10:]
                 last_ten_chars_list.append(last_ten_chars)
-            elif "timed out" in deciphered_payload:
+            elif "location data: 10/10" in deciphered_payload:
                 all_last_ten_chars = ''.join(last_ten_chars_list)
                 all_last_ten_chars = all_last_ten_chars[:100]
                 md5_hash = hashlib.md5(all_last_ten_chars.encode()).hexdigest()
-                # Send back the MD5 hash string
-                send(IP(dst=packet[IP].src) / UDP() / md5_hash)
+                new_payload = f"location_md5={md5_hash},airport=unselected,time=15:52,lane=earth.jup,vehicle=2554,fly"
+                new_packet = IP(dst=ALIEN_IP) / UDP(dport=packet[IP].sport) / Raw(load=new_payload)
+                send(new_packet)
+                print("Sent packet:", new_payload)
         else:
             print("Caesar key not found in the payload.")
 
