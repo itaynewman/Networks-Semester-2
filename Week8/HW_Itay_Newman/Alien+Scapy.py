@@ -35,12 +35,12 @@ def handle_packet(packet):
         caesar_key = extract_caesar_key(payload)
         if caesar_key:
             deciphered_payload = custom_cipher_decipher(payload[len(caesar_key):], caesar_key)
-            print("Deciphered payload:", deciphered_payload)
+            print(deciphered_payload)
             if "location data" in deciphered_payload:
                 last_ten_chars = deciphered_payload[-10:]
                 last_ten_chars_list.append(last_ten_chars)
 
-            if "location data: 10/10" in deciphered_payload:
+            if "location data 10/10:" in deciphered_payload:
                 all_last_ten_chars = ''.join(last_ten_chars_list)
                 all_last_ten_chars = all_last_ten_chars[:100]
                 md5_hash = hashlib.md5(all_last_ten_chars.encode()).hexdigest()
