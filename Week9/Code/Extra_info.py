@@ -1,4 +1,0 @@
-import socket
-
-SERVER_IP = "54.187.16.171"
-SERVER_PORT = 1336
